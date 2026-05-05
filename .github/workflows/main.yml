@@ -1,0 +1,23 @@
+name: Auto Deploy to AWS
+
+on:
+  push:
+    branches: [ main ] # This triggers the script every time you push to main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code from GitHub
+        uses: actions/checkout@v4
+
+      - name: Install Python and Boto3
+        run: pip install boto3
+
+      - name: Run the Deploy Script
+        env:
+          # These tell Boto3 who you are without showing your keys in the code
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'us-east-1' 
+        run: python deploy.py
