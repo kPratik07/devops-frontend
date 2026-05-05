@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs 'node' 
-    }
-
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
         NEXUS_VERSION = 'nexus3'
@@ -22,11 +18,7 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-            }
-        }
+        // Removed "Install Dependencies" to avoid the package.json error
 
         stage('SonarQube Analysis') {
             steps {
@@ -39,6 +31,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
+                    // This builds the image using your Dockerfile
                     sh "docker build -t ${IMAGE_NAME}:${env.BUILD_NUMBER} ."
                     sh "docker tag ${IMAGE_NAME}:${env.BUILD_NUMBER} ${IMAGE_NAME}:latest"
                 }
@@ -47,7 +40,7 @@ pipeline {
 
         stage('Package for Nexus') {
             steps {
-                sh 'zip -r frontend-build.zip . -x "node_modules/*" ".git/*"'
+                sh 'zip -r frontend-build.zip . -x ".git/*"'
             }
         }
 
