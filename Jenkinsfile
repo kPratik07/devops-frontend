@@ -1,11 +1,15 @@
 pipeline {
     agent any
+
     environment {
+        // Nexus Configuration
         NEXUS_VERSION = 'nexus3'
         NEXUS_PROTOCOL = 'http'
         NEXUS_URL = '54.173.95.16:8081'
         NEXUS_REPOSITORY = 'my-frontend-repo'
         NEXUS_CREDENTIAL_ID = 'nexus-creds'
+        
+        // Docker Configuration
         IMAGE_NAME = "my-frontend-app"
     }
 
@@ -16,8 +20,6 @@ pipeline {
             }
         }
 
-        // --- SONARQUBE SKIPPED TO FREE UP MEMORY ---
-        
         stage('Docker Build') {
             steps {
                 script {
@@ -29,7 +31,8 @@ pipeline {
 
         stage('Package for Nexus') {
             steps {
-                sh 'tar -cvf frontend-build.tar . --exclude=".git"'
+                // Fixed syntax: exclude comes first to avoid self-reference error
+                sh 'tar --exclude=".git" --exclude="frontend-build.tar" -cvf frontend-build.tar .'
             }
         }
 
@@ -50,6 +53,12 @@ pipeline {
                     )
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
         }
     }
 }
