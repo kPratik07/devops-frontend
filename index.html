@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DevBlog</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <h1>DevBlog</h1>
+      <span>Welcome to devops</span>
+    </nav>
+
+    <main>
+      <!-- Create Post -->
+      <section class="create-post">
+        <h2>Create a Post</h2>
+        <input type="text" id="title" placeholder="Enter post title..." />
+        <textarea
+          id="content"
+          placeholder="Write something amazing..."
+        ></textarea>
+        <button onclick="addPost()">Publish Your post</button>
+      </section>
+
+      <!-- Posts -->
+      <section id="posts" class="posts"></section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
