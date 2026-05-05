@@ -5,8 +5,8 @@ pipeline {
         // Nexus Configuration
         NEXUS_VERSION = 'nexus3'
         NEXUS_PROTOCOL = 'http'
-        NEXUS_URL = '54.173.95.16:8081'
-        NEXUS_REPOSITORY = 'my-frontend-repo'
+        NEXUS_URL = '98.94.102.71:8081'
+        NEXUS_REPOSITORY = 'my-frontend-app'
         NEXUS_CREDENTIAL_ID = 'nexus-creds'
         
         // Docker Configuration
